@@ -1,8 +1,9 @@
-import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:flutter_okta_sdk/BaseRequest.dart';
+import 'package:flutter_okta_sdk/flutter_okta_sdk.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthOktaService {
-  FlutterAppAuth appAuth = FlutterAppAuth();
+  var oktaSdk = OktaSDK();
   FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
   static const String OKTA_DOMAIN = 'dev-590808.okta.com';
@@ -17,20 +18,23 @@ class AuthOktaService {
   static const String OKTA_REDIRECT_URI = 'com.deere.phoenix:/callback';
   static const String OKTA_LOGOUT_REDIRECT_URI = 'com.deere.phoenix:/splash';
 
+  static final OKTA_BASE_REQUEST = BaseRequest(
+      clientId: OKTA_CLIENT_ID,
+      discoveryUrl: OKTA_DISCOVERY_URL,
+      endSessionRedirectUri: OKTA_LOGOUT_REDIRECT_URI,
+      redirectUrl: OKTA_REDIRECT_URI,
+      scopes: ['openid', 'profile', 'email', 'offline_access']);
+
+  Future setup() async {
+    await oktaSdk.setup(OKTA_BASE_REQUEST);
+  }
+
   Future authorize() async {
     try {
-      final AuthorizationTokenResponse result =
-          await appAuth.authorizeAndExchangeCode(
-        AuthorizationTokenRequest(
-          OKTA_CLIENT_ID,
-          OKTA_REDIRECT_URI,
-          issuer: OKTA_ISSUER_URL,
-          scopes: ['openid', 'profile', 'email', 'offline_access'],
-        ),
-      );
-
-      await storeToken(result.idToken, result.accessToken, result.refreshToken);
-      return result.accessToken;
+      if (oktaSdk.isInitialized == false) {
+        await this.setup();
+      }
+      await oktaSdk.signIn();
     } catch (e) {
       print(e);
     }
@@ -38,44 +42,12 @@ class AuthOktaService {
 
   Future logout() async {
     try {
-      final String storedIdToken = await secureStorage.read(key: 'id_token');
-
-      final AuthorizationTokenResponse result =
-          await appAuth.authorizeAndExchangeCode(
-        AuthorizationTokenRequest(
-          OKTA_CLIENT_ID,
-          OKTA_LOGOUT_REDIRECT_URI,
-          issuer: OKTA_ISSUER_URL,
-          scopes: ['openid', 'profile', 'email', 'offline_access'],
-          additionalParameters: {
-            "id_token_hint": storedIdToken,
-            "post_logout_redirect_uri": OKTA_LOGOUT_REDIRECT_URI
-          },
-          serviceConfiguration: AuthorizationServiceConfiguration(
-              "$OKTA_ISSUER_URL/v1/logout", "$OKTA_ISSUER_URL/v1/token"),
-        ),
-      );
-
-      await storeToken(result.idToken, result.accessToken, result.refreshToken);
-      return result.accessToken;
+      if (oktaSdk.isInitialized == false) {
+        await this.setup();
+      }
+      await oktaSdk.signOut();
     } catch (e) {
       print(e);
-    }
-  }
-
-  Future<void> storeToken(
-      String idToken, String accessToken, String refreshToken) async {
-    if (idToken != null) {
-      print("idToken >>> $idToken");
-      await secureStorage.write(key: 'id_token', value: idToken);
-    }
-    if (accessToken != null) {
-      print("accessToken >>> $accessToken");
-      await secureStorage.write(key: 'access_token', value: accessToken);
-    }
-    if (refreshToken != null) {
-      print("refreshToken >>> $refreshToken");
-      await secureStorage.write(key: 'refresh_token', value: refreshToken);
     }
   }
 }

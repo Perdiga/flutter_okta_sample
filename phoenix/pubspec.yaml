@@ -35,8 +35,8 @@ dependencies:
   http:
   flutter_webview_plugin: ^0.3.10+1
   openid_client: ^0.2.5
-  flutter_appauth:
-     path: ./packages/flutter_appauth/flutter_appauth
+  flutter_okta_sdk:
+     path: ../../flutter_okta_sdk
 
 dev_dependencies:
   flutter_test:

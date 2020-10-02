@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phoenix/services/AuthService.dart';
+import 'package:phoenix/providers/OktaProvider.dart';
 
 class MainScreen extends StatelessWidget {
   static const routeName = '/main';
@@ -11,8 +11,7 @@ class MainScreen extends StatelessWidget {
             child: RaisedButton(
           child: Text('Logout'),
           onPressed: () async {
-            await AuthOktaService().logout();
-
+            await AuthProvider.of(context).authService.logout();
             Navigator.of(context).pushReplacementNamed('/splash');
           },
         )),
