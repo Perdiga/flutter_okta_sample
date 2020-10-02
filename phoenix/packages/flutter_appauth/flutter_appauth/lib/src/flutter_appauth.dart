@@ -1,4 +1,4 @@
-import 'package:flutter_appauth_platform_interface/flutter_appauth_platform_interface.dart';
+/* import 'package:flutter_appauth_platform_interface/flutter_appauth_platform_interface.dart';
 
 class FlutterAppAuth {
   /// Convenience method for authorizing and then exchanges code
@@ -16,4 +16,6 @@ class FlutterAppAuth {
   Future<TokenResponse> token(TokenRequest request) {
     return FlutterAppAuthPlatform.instance.token(request);
   }
-}
+} */
+
+import 'package:flutter_okta_interface/flutter_okta_interface.dart';
