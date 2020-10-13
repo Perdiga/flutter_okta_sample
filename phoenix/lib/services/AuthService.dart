@@ -18,7 +18,7 @@ class AuthOktaService {
   static const String OKTA_REDIRECT_URI = 'com.deere.phoenix:/callback';
   static const String OKTA_LOGOUT_REDIRECT_URI = 'com.deere.phoenix:/splash';
 
-  static final OKTA_BASE_REQUEST = BaseRequest(
+  static final oktaBaseRequest = BaseRequest(
       clientId: OKTA_CLIENT_ID,
       discoveryUrl: OKTA_DISCOVERY_URL,
       endSessionRedirectUri: OKTA_LOGOUT_REDIRECT_URI,
@@ -26,7 +26,7 @@ class AuthOktaService {
       scopes: ['openid', 'profile', 'email', 'offline_access']);
 
   Future createConfig() async {
-    await oktaSdk.createConfig(OKTA_BASE_REQUEST);
+    await oktaSdk.createConfig(oktaBaseRequest);
   }
 
   Future authorize() async {
