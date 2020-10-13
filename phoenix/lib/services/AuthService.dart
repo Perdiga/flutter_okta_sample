@@ -25,14 +25,14 @@ class AuthOktaService {
       redirectUrl: OKTA_REDIRECT_URI,
       scopes: ['openid', 'profile', 'email', 'offline_access']);
 
-  Future setup() async {
-    await oktaSdk.setup(OKTA_BASE_REQUEST);
+  Future createConfig() async {
+    await oktaSdk.createConfig(OKTA_BASE_REQUEST);
   }
 
   Future authorize() async {
     try {
       if (oktaSdk.isInitialized == false) {
-        await this.setup();
+        await this.createConfig();
       }
       await oktaSdk.signIn();
     } catch (e) {
@@ -43,9 +43,141 @@ class AuthOktaService {
   Future logout() async {
     try {
       if (oktaSdk.isInitialized == false) {
-        await this.setup();
+        await this.createConfig();
       }
       await oktaSdk.signOut();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future getUser() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.getUser();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<bool> isAuthenticated() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.isAuthenticated();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<String> getAccessToken() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.getAccessToken();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<String> getIdToken() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.getIdToken();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<bool> revokeAccessToken() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.revokeAccessToken();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<bool> revokeIdToken() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.revokeIdToken();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<bool> revokeRefreshToken() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.revokeRefreshToken();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<bool> clearTokens() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.clearTokens();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<String> introspectAccessToken() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.introspectAccessToken();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<String> introspectIdToken() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.introspectIdToken();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<String> introspectRefreshToken() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.introspectRefreshToken();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<String> refreshTokens() async {
+    try {
+      if (oktaSdk.isInitialized == false) {
+        await this.createConfig();
+      }
+      return await oktaSdk.refreshTokens();
     } catch (e) {
       print(e);
     }
