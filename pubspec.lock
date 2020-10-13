@@ -65,7 +65,7 @@ packages:
   flutter_okta_sdk:
     dependency: "direct main"
     description:
-      path: "../../flutter-okta-sdk"
+      path: "../flutter-okta-sdk"
       relative: true
     source: path
     version: "0.0.1"
