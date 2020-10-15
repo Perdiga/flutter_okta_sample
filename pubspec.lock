@@ -65,10 +65,10 @@ packages:
   flutter_okta_sdk:
     dependency: "direct main"
     description:
-      path: "../flutter-okta-sdk"
-      relative: true
-    source: path
-    version: "0.0.1"
+      name: flutter_okta_sdk
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0-dev.1"
   flutter_secure_storage:
     dependency: "direct main"
     description:
