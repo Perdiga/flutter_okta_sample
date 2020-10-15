@@ -168,21 +168,3 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
-
-/* 
-return Scaffold(
-      body: Center(
-        child: Container(
-          child: RaisedButton(
-            child: Text('Logout'),
-            onPressed: () async {
-              var user = await AuthProvider.of(context).authService.getUser();
-              print(user);
-
-              //await AuthProvider.of(context).authService.logout();
-              Navigator.of(context).pushReplacementNamed('/splash');
-            },
-          ),
-        ),
-      ),
-    ); */

@@ -31,8 +31,9 @@ dependencies:
   simple_animations: ^1.3.6
   fluttertoast: ^7.1.1
   flutter_secure_storage: ^3.3.4
-  flutter_okta_sdk:
-    path: ../flutter-okta-sdk
+  flutter_okta_sdk: ^1.0.0-dev.1
+  #flutter_okta_sdk:
+  #  path: ../flutter-okta-sdk
   
 
 dev_dependencies:
